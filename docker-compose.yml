@@ -3,7 +3,8 @@ version: '3.8'
 services:
   postgres:
     image: postgres:10.3
-    enviroment: 
+    restart: always
+    environment: 
       - POSTGRES_USER=john
       - POSTGRES_PASSWORD=murphy
     volumes:
