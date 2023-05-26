@@ -13,6 +13,10 @@ datasource db {
 
 model User  {
     id Int @id @default(autoincrement())
-    spotify_username String
-    musicspaces_username String @unique
+    spotifyUsername String
+    musicspacesUsername String @unique
+    accessToken String
+    refreshToken String
+    accessTokenExpiration DateTime
+    createdAt DateTime @default(now())
 }
