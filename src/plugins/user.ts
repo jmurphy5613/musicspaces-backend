@@ -10,18 +10,23 @@ const usersPlugin = {
             {
                 method: 'GET',
                 path: '/users/get-all',
-                handler: getUserHandler
+                handler: getUsersHandler
             },
             {
                 method: 'POST',
                 path: '/users/create',
                 handler: createUserHandler
+            },
+            {
+                method: 'GET',
+                path: '/users/find-by-refresh-token/{refreshToken}',
+                handler: findUserByRefreshTokenHandler
             }
         ])
     }
 }
 
-const getUserHandler = async (req: Hapi.Request, res: Hapi.ResponseToolkit) => {
+const getUsersHandler = async (req: Hapi.Request, res: Hapi.ResponseToolkit) => {
     const { prisma } = req.server.app
 
     try {
@@ -30,7 +35,7 @@ const getUserHandler = async (req: Hapi.Request, res: Hapi.ResponseToolkit) => {
     }
     catch (err) {
         console.log(err)
-        return Boom.badImplementation(err)
+        return Boom.badImplementation("could not get users")
     }
 
 }
@@ -53,7 +58,29 @@ const createUserHandler = async (req: Hapi.Request, res: Hapi.ResponseToolkit) =
     }
     catch (err) {
         console.log(err)
-        return Boom.badImplementation(err)
+        return Boom.badImplementation("could not create user")
+    }
+}
+
+const findUserByRefreshTokenHandler = async (req: Hapi.Request, res: Hapi.ResponseToolkit) => {
+    const { prisma } = req.server.app
+    const { refreshToken } = req.params
+    
+    try {
+        const user = await prisma.user.findFirst({
+            where: {
+                refreshToken: refreshToken
+            }
+        })
+
+        if (user) {
+            return res.response(user).code(200)
+        } else {
+            return Boom.notFound("User not found")
+        }
+    } catch (err) {
+        console.log(err)
+        return Boom.badImplementation("Could not find user")
     }
 }
 
