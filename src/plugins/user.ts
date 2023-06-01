@@ -76,7 +76,7 @@ const findUserByRefreshTokenHandler = async (req: Hapi.Request, res: Hapi.Respon
         if (user) {
             return res.response(user).code(200)
         } else {
-            return Boom.notFound("User not found")
+            return res.response().code(200)
         }
     } catch (err) {
         console.log(err)
