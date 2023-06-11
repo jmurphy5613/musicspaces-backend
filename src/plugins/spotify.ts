@@ -13,6 +13,11 @@ const spotifyPlugin = {
                 method: 'GET',
                 path: '/spotify/top-tracks/{time_range}/{musicspacesUsername}',
                 handler: getTopTracksHandler
+            },
+            {
+                method: 'GET',
+                path: '/spotify/top-artists/{time_range}/{musicspacesUsername}',
+                handler: getTopArtistsHandler
             }
         ])
     }
@@ -57,6 +62,26 @@ const getTopTracksHandler = async (req: Hapi.Request, res: Hapi.ResponseToolkit)
     const topTracks = await getTopSongs(user.accessToken, req.params.time_range)
     return res.response(topTracks).code(200)
 
+}
+
+const getTopArtistsHandler = async (req: Hapi.Request, res: Hapi.ResponseToolkit) => {
+    const { prisma } = req.server.app
+    const musicspacesUsername = req.params.musicspacesUsername
+
+    const user = await prisma.user.findUnique({
+        where: {
+            musicspacesUsername
+        }
+    });
+
+    if (!user) {
+        return Boom.notFound('User not found')
+    }
+
+    await handleRefreshTokens(user, prisma)
+
+    const topArtists = await getTopSongs(user.accessToken, req.params.time_range)
+    return res.response(topArtists).code(200)
 }
 
 export default spotifyPlugin;

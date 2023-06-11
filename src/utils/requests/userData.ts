@@ -2,33 +2,6 @@ import axios from 'axios';
 import { Artist, UserInfo, Track, RecentlyPlayedTrack } from '../types';
 import { get24HoursAgoUnix } from '../conversions';
 
-export const getTopArtists = async (access_token: string, time_range: string): Promise<Artist[]> => {
-
-
-
-    try {
-        const options = {
-            url: 'https://api.spotify.com/v1/me/top/artists',
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + access_token
-            },
-            params: {
-                limit: 10,
-                time_range: time_range,
-                offset: 0
-            }
-        }
-    
-        const res = await axios(options)
-        return res.data.items as Artist[]
-    } catch (error) {
-        console.log(error)
-        throw new Error('Failed to get top artists');
-    }
-
-}
-
 export const getUserInfo = async (access_token: string): Promise<UserInfo> => {
     try {
         const options = {
@@ -90,5 +63,28 @@ export const getTopSongs = async (access_token: string, time_range: string): Pro
     } catch (error) {
         console.log(error)
         throw new Error('Failed to get top songs');
+    }
+}
+
+export const getTopArtists = async (access_token: string, time_range: string): Promise<Artist[]> => {
+    try {
+        const options = {
+            url: 'https://api.spotify.com/v1/me/top/artists',
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + access_token
+            },
+            params: {
+                limit: 10,
+                time_range: time_range,
+                offset: 0
+            }
+        }
+
+        const res = await axios(options)
+        return res.data.items as Artist[]
+    } catch (error) {
+        console.log(error)
+        throw new Error('Failed to get top artists');
     }
 }
