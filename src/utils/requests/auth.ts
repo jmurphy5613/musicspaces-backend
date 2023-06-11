@@ -14,19 +14,7 @@ export const refreshToken = async (refresh_token: string): Promise<SpotifyAuthRe
         }
     }
 
-    const makeRequest = async () => {
-        let result
-        await axios(options)
-        .then((res) => {
-            result = res.data
-            console.log(res)
-        })
-        .catch((err) => {
-            console.log('err', err)
-        })
-        return result
-    }
-
-    return await makeRequest()
+    const res = await axios(options)
+    return res.data as SpotifyAuthResponse
 	
 }

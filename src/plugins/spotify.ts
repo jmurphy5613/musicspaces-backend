@@ -2,7 +2,7 @@ import Boom from '@hapi/boom'
 import Hapi from '@hapi/hapi'
 import { PrismaClient, User } from '@prisma/client';
 import { refreshToken } from '../utils/requests/auth';
-import { getTopSongs } from '../utils/requests/userData';
+import { getTopArtists, getTopSongs } from '../utils/requests/userData';
 
 const spotifyPlugin = {
     name: 'app/users',
@@ -78,9 +78,10 @@ const getTopArtistsHandler = async (req: Hapi.Request, res: Hapi.ResponseToolkit
         return Boom.notFound('User not found')
     }
 
+
     await handleRefreshTokens(user, prisma)
 
-    const topArtists = await getTopSongs(user.accessToken, req.params.time_range)
+    const topArtists = await getTopArtists(user.accessToken, req.params.time_range)
     return res.response(topArtists).code(200)
 }
 
