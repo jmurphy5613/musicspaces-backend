@@ -21,6 +21,13 @@ const usersPlugin = {
                 method: 'GET',
                 path: '/users/find-by-refresh-token/{refreshToken}',
                 handler: findUserByRefreshTokenHandler
+            },
+            {
+                method: 'GET',
+                path: '/users/hello',
+                handler: (req: Hapi.Request, res: Hapi.ResponseToolkit) => {
+                    return res.response('Hello, world!').code(200)
+                }
             }
         ])
     }

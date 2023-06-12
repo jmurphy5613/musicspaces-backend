@@ -3,6 +3,7 @@ import { Artist, UserInfo, Track, RecentlyPlayedTrack } from '../types';
 import { get24HoursAgoUnix } from '../conversions';
 
 export const getUserInfo = async (access_token: string): Promise<UserInfo> => {
+    console.log("hey")
     try {
         const options = {
             url: 'https://api.spotify.com/v1/me',
