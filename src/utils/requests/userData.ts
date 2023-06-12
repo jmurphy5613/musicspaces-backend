@@ -37,6 +37,7 @@ export const getRecentlyPlayed = async (access_token: string): Promise<RecentlyP
         }
 
         const res = await axios(options)
+        console.log(res)
         return res.data.items as RecentlyPlayedTrack[]
     } catch (error) {
         console.log(error)

@@ -2,7 +2,7 @@ import Boom from '@hapi/boom'
 import Hapi, { server } from '@hapi/hapi'
 import { PrismaClient, User } from '@prisma/client';
 import { refreshToken } from '../utils/requests/auth';
-import { getTopArtists, getTopSongs, getUserInfo } from '../utils/requests/userData';
+import { getRecentlyPlayed, getTopArtists, getTopSongs, getUserInfo } from '../utils/requests/userData';
 
 const spotifyPlugin = {
     name: 'app/spotify',
@@ -28,14 +28,6 @@ const spotifyPlugin = {
                 method: 'GET',
                 path: '/spotify/recently-played/{musicspacesUsername}',
                 handler: getRecentlyPlayedHandler
-            },
-            {
-                method: 'GET',
-                path: '/spotify/hello',
-                handler: (req: Hapi.Request, res: Hapi.ResponseToolkit) => {
-                    return res.response('Hello, world!').code(200)
-                }
-
             }
         ])
     }
@@ -141,7 +133,7 @@ const getRecentlyPlayedHandler = async (req: Hapi.Request, res: Hapi.ResponseToo
     }
 
     await handleRefreshTokens(user, prisma)
-    const recentlyPlayed = await getUserInfo(user.accessToken)
+    const recentlyPlayed = await getRecentlyPlayed(user.accessToken)
     return res.response(recentlyPlayed).code(200)
 }
 
