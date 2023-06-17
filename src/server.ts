@@ -5,7 +5,7 @@ import spotifyPlugin from './plugins/spotify'
 
 const server: Hapi.Server = Hapi.server({
     port: process.env.PORT || 3001,
-    host: process.env.HOST || 'localhost',
+    host: '0.0.0.0',
     "routes": {
         "cors": true
     }
