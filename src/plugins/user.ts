@@ -58,7 +58,8 @@ const createUserHandler = async (req: Hapi.Request, res: Hapi.ResponseToolkit) =
                 musicspacesUsername: payload.musicspacesUsername,
                 accessToken: payload.accessToken,
                 refreshToken: payload.refreshToken,
-                accessTokenExpiration: payload.accessTokenExpiration
+                accessTokenExpiration: payload.accessTokenExpiration,
+                profilePicture: payload.profilePicture
             }
         })
         return res.response(createdUser).code(201)

@@ -4,6 +4,7 @@ export interface UserCreatePayload {
     accessToken: string
     refreshToken: string
     accessTokenExpiration: Date
+    profilePicture: string
 }
 export interface Artist {
     href: string,
