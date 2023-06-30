@@ -22,6 +22,27 @@ export const refreshToken = async (refresh_token: string): Promise<SpotifyAuthRe
         console.log(error)
         throw new Error('Failed to refresh token');
     }
- 
-	
+}
+
+export const getAccessToken = async (code: string): Promise<SpotifyAuthResponse> => {
+    try {
+        const options = {
+            url: 'https://accounts.spotify.com/api/token',
+            method: 'POST',
+            headers: {
+                'Authorization': 'Basic ' + (new Buffer(process.env.NEXT_PUBLIC_CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'))
+            },
+            params: {
+                code: code,
+                redirect_uri: 'http://localhost:3000',
+                grant_type: 'authorization_code'
+            }
+        } 
+
+        const res = await axios(options)
+        return res.data as SpotifyAuthResponse
+    } catch (error) {
+        console.log(error)
+        throw new Error('Failed to get access token');
+    }
 }

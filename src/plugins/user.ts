@@ -1,6 +1,7 @@
 import Boom from '@hapi/boom'
 import Hapi from '@hapi/hapi'
 import { UserCreatePayload } from '../utils/types'
+import { getAccessToken } from '../utils/requests/auth'
 
 const usersPlugin = {
     name: 'app/users',
@@ -23,11 +24,9 @@ const usersPlugin = {
                 handler: findUserByRefreshTokenHandler
             },
             {
-                method: 'GET',
-                path: '/users/hello',
-                handler: (req: Hapi.Request, res: Hapi.ResponseToolkit) => {
-                    return res.response('Hello, world!').code(200)
-                }
+                method: 'POST',
+                path: '/users/getAccessToken/{code}',
+                handler: getAccessTokenHandler
             }
         ])
     }
@@ -89,6 +88,18 @@ const findUserByRefreshTokenHandler = async (req: Hapi.Request, res: Hapi.Respon
     } catch (err) {
         console.log(err)
         return Boom.badImplementation("Could not find user")
+    }
+}
+
+const getAccessTokenHandler = async (req: Hapi.Request, res: Hapi.ResponseToolkit) => {
+    const { code } = req.params
+
+    try {
+        const accessToken = await getAccessToken(code)
+        return res.response(accessToken).code(200)
+    } catch (err) {
+        console.log(err)
+        return Boom.badImplementation("Could not get access token")
     }
 }
 
