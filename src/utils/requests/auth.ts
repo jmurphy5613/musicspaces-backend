@@ -34,7 +34,7 @@ export const getAccessToken = async (code: string): Promise<SpotifyAuthResponse>
             },
             params: {
                 code: code,
-                redirect_uri: 'http://localhost:3000',
+                redirect_uri: 'https://musicspaces-backend-production.up.railway.app',
                 grant_type: 'authorization_code'
             }
         } 
