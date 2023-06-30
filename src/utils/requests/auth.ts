@@ -11,7 +11,8 @@ export const refreshToken = async (refresh_token: string): Promise<SpotifyAuthRe
             },
             params: {
                 grant_type: 'refresh_token',
-                refresh_token: refresh_token
+                refresh_token: refresh_token,
+                client_id: process.env.NEXT_PUBLIC_CLIENT_ID
             }
         }
     
