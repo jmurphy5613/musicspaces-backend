@@ -32,7 +32,7 @@ export const getAccessToken = async (code: string): Promise<SpotifyAuthResponse>
             url: 'https://accounts.spotify.com/api/token',
             method: 'POST',
             headers: {
-                'Authorization': 'Basic ' + (new Buffer(process.env.NEXT_PUBLIC_CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'))
+                'Authorization': 'Basic ' + (Buffer.from(process.env.NEXT_PUBLIC_CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'))
             },
             params: {
                 code: code,
