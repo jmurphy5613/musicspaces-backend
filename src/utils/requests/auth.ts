@@ -7,7 +7,7 @@ export const refreshToken = async (refresh_token: string): Promise<SpotifyAuthRe
             url: 'https://accounts.spotify.com/api/token',
             method: 'POST',
             headers: {
-                'Authorization': 'Basic ' + (new Buffer(process.env.NEXT_PUBLIC_CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'))
+                'Authorization': 'Basic ' + (Buffer.from(process.env.NEXT_PUBLIC_CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'))
             },
             params: {
                 grant_type: 'refresh_token',
