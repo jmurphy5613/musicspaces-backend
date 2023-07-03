@@ -26,6 +26,7 @@ export const refreshToken = async (refresh_token: string): Promise<SpotifyAuthRe
 }
 
 export const getAccessToken = async (code: string): Promise<SpotifyAuthResponse> => {
+    console.log(process.env.NEXT_PUBLIC_CLIENT_ID, process.env.CLIENT_SECRET)
     try {
         const options = {
             url: 'https://accounts.spotify.com/api/token',
@@ -35,7 +36,7 @@ export const getAccessToken = async (code: string): Promise<SpotifyAuthResponse>
             },
             params: {
                 code: code,
-                redirect_uri: 'https://musicspaces-git-feat-multiplayer-jmurphy5613.vercel.app',
+                redirect_uri: 'http://localhost:3000',
                 grant_type: 'authorization_code'
             }
         } 
