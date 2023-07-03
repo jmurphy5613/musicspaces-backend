@@ -35,7 +35,7 @@ const spotifyPlugin = {
 
 const handleRefreshTokens = async(user: User, prisma: PrismaClient) => {
 
-    // if(user.accessTokenExpiration < new Date()) {
+    if(user.accessTokenExpiration < new Date()) {
         const refreshedToken = await refreshToken(user.refreshToken)
         
         const accessTokenExpiration = new Date()
@@ -56,8 +56,7 @@ const handleRefreshTokens = async(user: User, prisma: PrismaClient) => {
                 id: user.id
             }
         });
-        console.log(newUser)
-    // }
+    }
 }
 
 const getTopTracksHandler = async (req: Hapi.Request, res: Hapi.ResponseToolkit) => {

@@ -26,7 +26,6 @@ export const refreshToken = async (refresh_token: string): Promise<SpotifyAuthRe
 }
 
 export const getAccessToken = async (code: string): Promise<SpotifyAuthResponse> => {
-    console.log(process.env.NEXT_PUBLIC_CLIENT_ID, process.env.CLIENT_SECRET, code)
     try {
         const options = {
             url: 'https://accounts.spotify.com/api/token',
