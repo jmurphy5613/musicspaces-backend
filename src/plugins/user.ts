@@ -27,6 +27,11 @@ const usersPlugin = {
                 method: 'POST',
                 path: '/users/getAccessToken/{code}',
                 handler: getAccessTokenHandler
+            },
+            {
+                method: 'GET',
+                path: '/users/get-user-by-spotify-username/{spotifyUsername}',
+                handler: getUserBySpotifyUsernameHandler
             }
         ])
     }
@@ -100,6 +105,29 @@ const getAccessTokenHandler = async (req: Hapi.Request, res: Hapi.ResponseToolki
     } catch (err) {
         console.log(err)
         return Boom.badImplementation("Could not get access token")
+    }
+}
+
+const getUserBySpotifyUsernameHandler = async (req: Hapi.Request, res: Hapi.ResponseToolkit) => {
+    const { prisma } = req.server.app
+    const { spotifyUsername } = req.params
+
+    try {
+        const user = await prisma.user.findFirst({
+            where: {
+                spotifyUsername: spotifyUsername
+            }
+        })
+
+        if (user) {
+            return res.response(user).code(200)
+        }
+        else {
+            return res.response().code(200)
+        }
+    } catch (err) {
+        console.log(err)
+        return Boom.badImplementation("Could not get user")
     }
 }
 
