@@ -35,7 +35,7 @@ export const getAccessToken = async (code: string): Promise<SpotifyAuthResponse>
             },
             params: {
                 code: code,
-                redirect_uri: 'https://musicspaces-git-feat-multiplayer-jmurphy5613.vercel.app',
+                redirect_uri: 'http://localhost:3000',
                 grant_type: 'authorization_code'
             }
         } 
