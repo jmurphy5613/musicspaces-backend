@@ -79,7 +79,7 @@ export const getTopArtists = async (access_token: string, time_range: string): P
                 limit: 10,
                 time_range: time_range,
                 offset: 0
-            }
+            },
         }
 
         const res = await axios(options)
