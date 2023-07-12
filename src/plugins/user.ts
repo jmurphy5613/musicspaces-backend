@@ -111,7 +111,7 @@ const getAccessTokenHandler = async (req: Hapi.Request, res: Hapi.ResponseToolki
 const getUserBySpotifyUsernameHandler = async (req: Hapi.Request, res: Hapi.ResponseToolkit) => {
     const { prisma } = req.server.app
     const { spotifyUsername } = req.params
-
+    console.log(spotifyUsername)
     try {
         const user = await prisma.user.findFirst({
             where: {
@@ -119,12 +119,12 @@ const getUserBySpotifyUsernameHandler = async (req: Hapi.Request, res: Hapi.Resp
             }
         })
 
+        console.log(user)
+
         if (user) {
             return res.response(user).code(200)
         }
-        else {
-            return res.response().code(200)
-        }
+        return res.response({}).code(200)
     } catch (err) {
         console.log(err)
         return Boom.badImplementation("Could not get user")
